@@ -1,0 +1,91 @@
+main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #3CB87A;
+}
+
+.game-section {
+  width: 100%;
+  display: flex;
+}
+
+#hang-section {
+  order: 1;
+  height: 40%;
+  background-color: #736D25;
+}
+#blanks-section {
+  order: 2;
+  height: 30%;
+}
+#alphabet-section {
+  order: 3;
+  height: 30%;
+  display: flex;
+}
+
+.top-div,
+.mid-div,
+bottom-div {
+  width: 100%;
+  height: 100%;
+}
+
+
+#letterspaces {
+  order: 2;
+  background-color: #A179D9;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+  overflow: auto;
+}
+.word-letter {
+  width: 10px;
+  height: 40%;
+  padding: 0 4%;
+  margin-right: 3%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 4rem;
+  border-bottom: 5px solid black;
+}
+
+
+#alphabet-keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.letter {
+  width: 7vw;
+  height: 30%;
+  background-color: #F2E205;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 2rem;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0 0 0;
+}
+.letter:nth-child(-1n+5) {
+  background-color: #3ABAFF;
+}
+.letter:hover {
+  color: white;
+  background-color: #FF6D0F;
+}
+.letter:active {
+  box-shadow: inset 0 0 5px black;
+  font-size: 1.8rem;
+}
