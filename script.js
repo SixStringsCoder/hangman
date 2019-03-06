@@ -32,3 +32,5 @@ alphabetKeys.addEventListener('click', (e) => {
 
 secretWord("escape");
 buildAlphabet(alphabet);
+
+module.exports.buildAlphabet = buildAlphabet;
