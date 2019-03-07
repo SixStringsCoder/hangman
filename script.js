@@ -5,32 +5,32 @@ const alphabet =   ["A", "E", "I", "O", "U", "B", "C", "D", "F", "G", "H", "J", 
 
 
 const buildAlphabet = (arr) => {
-  arr.map((letter, index) => {
-    let htmlpattern = `<div class="letter" id="${letter}">${letter}</div>`;
-    alphabetKeys.innerHTML += htmlpattern;
-  });
+  // arr.map((letter, index) => {
+  //   let htmlpattern = `<div class="letter" id="${letter}">${letter}</div>`;
+  //   alphabetKeys.innerHTML += htmlpattern;
+  // });
 }
 
-const secretWord = (word) => {
-  let wordArr = word.toUpperCase().split('');
-  console.log(wordArr);
-  wordArr.map((letter) => {
-    let blank = `<div class="word-letter" data-value="${letter}"></div>`;
-    letterblanks.innerHTML += blank;
-  });
-}
+// const secretWord = (word) => {
+//   let wordArr = word.toUpperCase().split('');
+//   console.log(wordArr);
+//   wordArr.map((letter) => {
+//     let blank = `<div class="word-letter" data-value="${letter}"></div>`;
+//     letterblanks.innerHTML += blank;
+//   });
+// }
+//
+// alphabetKeys.addEventListener('click', (e) => {
+//   const wordletter = document.querySelectorAll('.word-letter');
+//   wordletter.forEach(letterhtml => {
+//     if (e.target.id === letterhtml.dataset.value) {
+//       console.log("YES!");
+//       letterhtml.innerHTML = e.target.id;
+//     }
+//   })
+// })
 
-alphabetKeys.addEventListener('click', (e) => {
-  const wordletter = document.querySelectorAll('.word-letter');
-  wordletter.forEach(letterhtml => {
-    if (e.target.id === letterhtml.dataset.value) {
-      console.log("YES!");
-      letterhtml.innerHTML = e.target.id;
-    }
-  })
-})
-
-secretWord("escape");
+// secretWord("escape");
 buildAlphabet(alphabet);
 
 module.exports.buildAlphabet = buildAlphabet;
