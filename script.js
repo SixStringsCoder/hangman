@@ -1,6 +1,6 @@
 // MODEL never communicates with VIEW, only with MANAGER
 const model = {
-  alphabet:   ["A", "E", "I", "O", "U", "B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"],
+  alphabet: ["A", "E", "I", "O", "U", "B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"],
   challenges: ["escape", "Hollywood", "empire", "trident", "frisbee"],
 };
 
@@ -15,7 +15,7 @@ const view = {
     this.renderChallenge();
     this.fingers = 8;
     this.renderFingers();
-    this.alphabetKeys.addEventListener('click', this.renderLetters);
+    this.alphabetKeys.addEventListener('click', this.checkGuess);
   },
 
   // Builds Alphabet keysboard
@@ -37,22 +37,33 @@ const view = {
     });
   },
 
-  renderLetters: function(e) {
+  renderFingers: function() {
+    for (let i = 0; i < this.fingers; i += 1) {
+      let fingerHTML = `
+        <div class="finger" id="finger${i}">
+        <div class="fingernail"></div>
+        </div>`;
+     this.ledge.innerHTML += fingerHTML;
+    }
+  },
+
+  checkGuess: function(e) {
+    let match = false;
     this.wordletter = document.querySelectorAll('.word-letter');
+    // correct guess then show letter(s)
     this.wordletter.forEach(letterDiv => {
       if (e.target.id === letterDiv.dataset.value) {
         letterDiv.innerHTML = e.target.id;
+        match = true
       }
     });
-  },
-
-  renderFingers: function() {
-
-    for (let i = 0; i < this.fingers; i += 1) {
-       let fingerHTML = `<div class="finger" id="finger${i}"><div class="fingernail"></div></div>`;
-      this.ledge.innerHTML += fingerHTML;
+    // incorrect guess remove finger from wall
+    if (!match) {
+      const ledgefingers = document.querySelector('.finger');
+      ledgefingers.parentNode.removeChild(ledgefingers);
     }
   },
+
 };
 
 // MANAGER - always sits between MODEL and VIEW and delegates info and tasks

@@ -63,7 +63,7 @@ bottom-div {
 #top-of-ledge {
   width: 60%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
 #ledge {
   width: 100%;
