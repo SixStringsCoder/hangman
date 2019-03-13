@@ -4,6 +4,7 @@ const model = {
   challenges: ["escape", "Hollywood", "empire", "trident", "frisbee"],
   selectedWord: [],
   compareArr: [],
+  fingers: 8,
   sounds: {
     boing: "audio/boing1.mp3",
     right: "audio/right_answer1.mp3",
@@ -21,7 +22,6 @@ const view = {
     this.ledge = document.querySelector('#top-of-ledge');
     this.renderAlphabet();
     this.renderChallenge();
-    this.fingers = 8;
     this.renderFingers();
     this.alphabetKeys.addEventListener('click', this.checkGuess);
   },
@@ -45,7 +45,8 @@ const view = {
   },
 
   renderFingers: function() {
-    for (let i = 0; i < this.fingers; i += 1) {
+    let fingers = manager.getFingers();
+    for (let i = 0; i < fingers; i += 1) {
       let fingerHTML = `
         <div class="finger" id="finger${i}">
         <div class="fingernail"></div>
@@ -71,10 +72,10 @@ const view = {
     if (!match) {
       const ledgefingers = document.querySelector('.finger');
       ledgefingers.parentNode.removeChild(ledgefingers);
+      manager.setFingers();
       manager.getBoingSFX();
+      manager.checkWinner();
     }
-
-
   },
 };
 
@@ -92,13 +93,17 @@ const manager = {
     return challenge;
   },
 
+  getFingers: () => model.fingers,
+  setFingers: () => model.fingers -= 1,
+
   checkWinner: function() {
     console.log(model.compareArr.length);
     console.log(model.selectedWord.length);
     if (model.compareArr.length === model.selectedWord.length) {
       manager.getWinnerSFX();
-    } else {
-      return false;
+    }
+    if (model.fingers === 0) {
+      manager.getLoserSFX();
     }
   },
 
@@ -118,7 +123,7 @@ const manager = {
     win.volume = .4;
   },
   getLoserSFX: () => {
-    const lose = new Audio(model.sounds.winner);
+    const lose = new Audio(model.sounds.loser);
     lose.play()
     lose.volume = .4;
   },
