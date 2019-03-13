@@ -2,11 +2,13 @@
 const model = {
   alphabet: ["A", "E", "I", "O", "U", "B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"],
   challenges: ["escape", "Hollywood", "empire", "trident", "frisbee"],
+  selectedWord: [],
+  compareArr: [],
   sounds: {
-    boing: "https://s3.amazonaws.com/freesoundeffects/mp3/mp3_7338.mp3",
-    right: "https://s3.amazonaws.com/freesoundeffects/mp3/mp3_456472.mp3",
-    winner: "https://s3.amazonaws.com/freesoundeffects/mp3/mp3_482986.mp3"
-
+    boing: "audio/boing1.mp3",
+    right: "audio/right_answer1.mp3",
+    winner: "audio/winner.mp3",
+    loser: "audio/loser.mp3"
   }
 };
 
@@ -36,8 +38,7 @@ const view = {
    // Builds blank spaces for challenge word
   renderChallenge: function() {
     let word = manager.getChallenge();
-    let wordArr = word.toUpperCase().split('');
-    wordArr.map((letter) => {
+    word.map((letter) => {
       let blank = `<div class="word-letter" data-value="${letter}"></div>`;
       this.letterblanks.innerHTML += blank;
     });
@@ -61,17 +62,20 @@ const view = {
       if (e.target.id === letterDiv.dataset.value) {
         letterDiv.innerHTML = e.target.id;
         match = true;
-        manager.getRight()
+        model.compareArr.push(e.target.id);
+        manager.getRightSFX();
+        manager.checkWinner();
       }
     });
     // incorrect guess remove finger from wall
     if (!match) {
       const ledgefingers = document.querySelector('.finger');
       ledgefingers.parentNode.removeChild(ledgefingers);
-      manager.getBoing();
+      manager.getBoingSFX();
     }
-  },
 
+
+  },
 };
 
 // MANAGER - always sits between MODEL and VIEW and delegates info and tasks
@@ -80,24 +84,43 @@ const manager = {
 
   getAlphabet: () => model.alphabet,
 
-  getChallenge: () => model.challenges[Math.floor(Math.random() * model.challenges.length)],
+  getChallenge: () => {
+    let challenge = model.challenges[Math.floor(Math.random() * model.challenges.length)];
+    challenge = challenge.toUpperCase().split('');
+    challenge.forEach(letter => model.selectedWord.push(letter));
+    console.log(model.selectedWord);
+    return challenge;
+  },
 
-  getBoing: () => {
-    console.log(model.sounds.boing);
+  checkWinner: function() {
+    console.log(model.compareArr.length);
+    console.log(model.selectedWord.length);
+    if (model.compareArr.length === model.selectedWord.length) {
+      manager.getWinnerSFX();
+    } else {
+      return false;
+    }
+  },
+
+  getBoingSFX: () => {
     const fingerGone = new Audio(model.sounds.boing);
     fingerGone.play()
-    fingerGone.volume = .2;
+    fingerGone.volume = .4;
   },
-  getRight: () => {
+  getRightSFX: () => {
     const rightLetter = new Audio(model.sounds.right);
     rightLetter.play()
-    rightLetter.volume = .2;
+    rightLetter.volume = .4;
   },
-  getWinner: () => {
-    console.log(model.sounds.boing);
+  getWinnerSFX: () => {
     const win = new Audio(model.sounds.winner);
     win.play()
-    win.volume = .2;
+    win.volume = .4;
+  },
+  getLoserSFX: () => {
+    const lose = new Audio(model.sounds.winner);
+    lose.play()
+    lose.volume = .4;
   },
 
 };
