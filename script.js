@@ -26,7 +26,7 @@ const view = {
     this.alphabetKeys.addEventListener('click', this.checkGuess);
   },
 
-  // Builds Alphabet keysboard
+  // Builds Alphabet keyboard
   renderAlphabet: function() {
     const arr = manager.getAlphabet();
     arr.map((letter, index) => {
